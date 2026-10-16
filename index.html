@@ -12,7 +12,6 @@
 
         body { font-family: Arial, sans-serif; background-color: #f0f0f0; }
         
-        /* --- FORMULARIO --- */
         .panel-control {
             background: white; padding: 20px; margin: 20px auto; max-width: 1100px;
             border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center;
@@ -102,7 +101,6 @@
         }
         .btn-ir:hover { background-color: #e0a800; }
 
-        /* ✅ PANEL DE AJUSTES TIPO "WORD" (COMPACTO) */
         .panel-ajustes {
             display: none;
             background-color: #f8f9fa;
@@ -165,7 +163,9 @@
             cursor: pointer;
             height: 4px;
         }
-        .ajuste-compacto select {
+        .ajuste-compacto select,
+        .ajuste-compacto input[type="number"],
+        .ajuste-compacto input[type="text"] {
             flex: 1;
             padding: 3px 5px;
             font-size: 12px;
@@ -207,7 +207,6 @@
         }
         .btn-reset-ajustes:hover { background-color: #5a6268; }
 
-        /* INDICADOR DE ETIQUETA ACTUAL */
         .indicador-etiqueta {
             position: fixed;
             bottom: 30px;
@@ -226,7 +225,6 @@
             display: block;
         }
 
-        /* --- ETIQUETAS --- */
         .hoja {
             width: 210mm; 
             height: 297mm; 
@@ -355,7 +353,6 @@
             <button class="btn-accion btn-imprimir" id="btnImprimir" onclick="window.print()">🖨️ Imprimir</button>
         </div>
 
-        <!-- ✅ PANEL DE AJUSTES COMPACTO -->
         <div class="panel-ajustes" id="panelAjustes">
             <div class="tabs-ajustes">
                 <button class="tab-btn active" onclick="cambiarTab(event, 'tabTexto')">📝 Texto</button>
@@ -378,10 +375,41 @@
                         <option value="Courier New">Courier New</option>
                     </select>
                 </div>
+                <!-- ✅ DESPLEGABLE EDITABLE (input + datalist) -->
                 <div class="ajuste-compacto">
                     <label>Tamaño:</label>
-                    <input type="range" id="sliderFuente" min="14" max="40" value="18" oninput="aplicarAjustes()">
-                    <span class="valor" id="valorFuente">18px</span>
+                    <input type="text" id="selectTamaño" list="listaTamaños" value="18" oninput="aplicarAjustes()" style="flex:1;">
+                    <datalist id="listaTamaños">
+                        <option value="8">
+                        <option value="9">
+                        <option value="9.5">
+                        <option value="10">
+                        <option value="10.5">
+                        <option value="11">
+                        <option value="12">
+                        <option value="13">
+                        <option value="14">
+                        <option value="15">
+                        <option value="16">
+                        <option value="17">
+                        <option value="18">
+                        <option value="19">
+                        <option value="20">
+                        <option value="21">
+                        <option value="22">
+                        <option value="24">
+                        <option value="26">
+                        <option value="28">
+                        <option value="30">
+                        <option value="32">
+                        <option value="36">
+                        <option value="40">
+                        <option value="44">
+                        <option value="48">
+                        <option value="56">
+                        <option value="64">
+                        <option value="72">
+                    </datalist>
                 </div>
                 <div class="ajuste-compacto">
                     <label>Grosor:</label>
@@ -518,7 +546,7 @@
 
         function aplicarAjustes() {
             const fuente = document.getElementById('selectFuente').value;
-            const tamaño = document.getElementById('sliderFuente').value;
+            const tamaño = document.getElementById('selectTamaño').value;
             const grosor = document.getElementById('selectGrosor').value;
             const colorFuente = document.getElementById('colorFuente').value;
             const alineacion = document.getElementById('selectAlineacion').value;
@@ -538,7 +566,6 @@
 
             const margenSup = document.getElementById('sliderMargenSup').value;
 
-            document.getElementById('valorFuente').textContent = tamaño + 'px';
             document.getElementById('valorLineHeight').textContent = lineHeight;
             document.getElementById('valorLetterSpacing').textContent = letterSpacing + 'px';
             document.getElementById('valorAncho').textContent = ancho + 'cm';
@@ -591,7 +618,7 @@
 
         function resetearAjustes() {
             document.getElementById('selectFuente').value = 'Arial';
-            document.getElementById('sliderFuente').value = 18;
+            document.getElementById('selectTamaño').value = 18;
             document.getElementById('selectGrosor').value = '700';
             document.getElementById('colorFuente').value = '#000000';
             document.getElementById('selectAlineacion').value = 'left';
