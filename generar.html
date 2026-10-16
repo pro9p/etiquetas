@@ -141,7 +141,7 @@
         }
         .tab-content.active {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* ✅ COLUMNAS MÁS ANCHAS */
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); //
             gap: 8px 15px;
         }
 
@@ -151,17 +151,17 @@
             align-items: center;
             gap: 8px;
             font-size: 12px;
-            min-width: 0; /* Importante para que el texto se corte si es necesario */
+            min-width: 0; //
         }
         .ajuste-compacto label {
-            flex: 0 0 110px; /* ✅ MÁS ANCHO PARA QUE NO SE CORTE EL TEXTO */
+            flex: 0 0 110px; //
             font-size: 12px;
             font-weight: bold;
             color: #555;
             text-align: right;
-            white-space: nowrap; /* Evita que el texto se rompa en dos líneas */
+            white-space: nowrap; //
             overflow: hidden;
-            text-overflow: ellipsis; /* Si aún no cabe, muestra "..." */
+            text-overflow: ellipsis; //
         }
         .ajuste-compacto input[type="range"] {
             flex: 1;
