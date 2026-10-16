@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etiquetas Dimexa</title>
-    <link rel="icon" href="logo.png" type="image/png">
     <script src="mammoth.browser.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,7 +14,7 @@
         
         /* --- FORMULARIO --- */
         .panel-control {
-            background: white; padding: 20px; margin: 20px auto; max-width: 900px;
+            background: white; padding: 20px; margin: 20px auto; max-width: 1100px;
             border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center;
         }
         .panel-control h2 { margin-top: 0; color: #333; }
@@ -28,7 +27,7 @@
         }
         
         .editor {
-            width: 100%; min-height: 150px; padding: 10px; 
+            width: 100%; min-height: 120px; padding: 10px; 
             border: 2px dashed #007bff; border-radius: 4px; 
             font-family: Arial, sans-serif; font-size: 15px; 
             resize: vertical; outline: none; background-color: #f0f8ff;
@@ -103,88 +102,108 @@
         }
         .btn-ir:hover { background-color: #e0a800; }
 
-        /* ✅ PANEL DE AJUSTES AMPLIADO */
+        /* ✅ PANEL DE AJUSTES TIPO "WORD" (COMPACTO) */
         .panel-ajustes {
             display: none;
             background-color: #f8f9fa;
-            border: 2px solid #007bff;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
+            border: 1px solid #007bff;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 15px;
             text-align: left;
         }
-        .panel-ajustes h3 {
-            margin-top: 0;
-            margin-bottom: 15px;
-            color: #007bff;
-            font-size: 16px;
-            text-align: center;
-        }
-        .seccion-ajustes {
-            background: white;
-            border-radius: 6px;
-            padding: 12px;
-            margin-bottom: 12px;
-            border-left: 4px solid #007bff;
-        }
-        .seccion-ajustes h4 {
-            margin: 0 0 10px 0;
-            font-size: 14px;
-            color: #333;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 5px;
-        }
-        .ajuste-fila {
+
+        .tabs-ajustes {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
+            gap: 3px;
+            border-bottom: 2px solid #007bff;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
         }
-        .ajuste-fila label {
-            flex: 0 0 160px;
-            font-size: 13px;
+        .tab-btn {
+            background: #e9ecef;
+            border: none;
+            padding: 6px 12px;
+            font-size: 12px;
             font-weight: bold;
             color: #555;
-        }
-        .ajuste-fila input[type="range"] {
-            flex: 1;
             cursor: pointer;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.2s;
         }
-        .ajuste-fila select,
-        .ajuste-fila input[type="color"] {
-            flex: 1;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 13px;
-            cursor: pointer;
+        .tab-btn:hover { background: #dee2e6; }
+        .tab-btn.active {
+            background: #007bff;
+            color: white;
         }
-        .ajuste-fila input[type="color"] {
-            height: 32px;
-            padding: 2px;
+
+        .tab-content {
+            display: none;
+            padding: 8px 0;
         }
-        .ajuste-fila .valor {
-            flex: 0 0 60px;
-            text-align: right;
-            font-weight: bold;
+        .tab-content.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 8px 15px;
+        }
+
+        .ajuste-compacto {
+            display: flex;
+            align-items: center;
+            gap: 6px;
             font-size: 12px;
+        }
+        .ajuste-compacto label {
+            flex: 0 0 90px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #555;
+            text-align: right;
+        }
+        .ajuste-compacto input[type="range"] {
+            flex: 1;
+            cursor: pointer;
+            height: 4px;
+        }
+        .ajuste-compacto select {
+            flex: 1;
+            padding: 3px 5px;
+            font-size: 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .ajuste-compacto input[type="color"] {
+            flex: 1;
+            height: 24px;
+            padding: 1px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .ajuste-compacto .valor {
+            flex: 0 0 45px;
+            text-align: right;
+            font-size: 11px;
+            font-weight: bold;
             color: #007bff;
         }
-        .ajuste-fila input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+        .ajuste-compacto input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
             cursor: pointer;
         }
+
         .btn-reset-ajustes {
             background-color: #6c757d;
             color: white;
             border: none;
-            padding: 10px 15px;
-            font-size: 13px;
-            border-radius: 4px;
+            padding: 5px 12px;
+            font-size: 11px;
+            border-radius: 3px;
             cursor: pointer;
+            margin-top: 8px;
             width: 100%;
-            margin-top: 5px;
         }
         .btn-reset-ajustes:hover { background-color: #5a6268; }
 
@@ -336,16 +355,18 @@
             <button class="btn-accion btn-imprimir" id="btnImprimir" onclick="window.print()">🖨️ Imprimir</button>
         </div>
 
-        <!-- ✅ PANEL DE AJUSTES COMPLETO -->
+        <!-- ✅ PANEL DE AJUSTES COMPACTO -->
         <div class="panel-ajustes" id="panelAjustes">
-            <h3>⚙️ Ajustes de la Etiqueta (en tiempo real)</h3>
+            <div class="tabs-ajustes">
+                <button class="tab-btn active" onclick="cambiarTab(event, 'tabTexto')">📝 Texto</button>
+                <button class="tab-btn" onclick="cambiarTab(event, 'tabEtiqueta')">📐 Etiqueta</button>
+                <button class="tab-btn" onclick="cambiarTab(event, 'tabLogo')">🖼️ Logo</button>
+                <button class="tab-btn" onclick="cambiarTab(event, 'tabHoja')">📄 Hoja</button>
+            </div>
 
-            <!-- 📝 SECCIÓN TEXTO -->
-            <div class="seccion-ajustes">
-                <h4>📝 Texto</h4>
-
-                <div class="ajuste-fila">
-                    <label>Tipo de letra:</label>
+            <div class="tab-content active" id="tabTexto">
+                <div class="ajuste-compacto">
+                    <label>Fuente:</label>
                     <select id="selectFuente" onchange="aplicarAjustes()">
                         <option value="Arial">Arial</option>
                         <option value="Helvetica">Helvetica</option>
@@ -357,14 +378,12 @@
                         <option value="Courier New">Courier New</option>
                     </select>
                 </div>
-
-                <div class="ajuste-fila">
-                    <label>Tamaño de letra:</label>
+                <div class="ajuste-compacto">
+                    <label>Tamaño:</label>
                     <input type="range" id="sliderFuente" min="14" max="40" value="18" oninput="aplicarAjustes()">
                     <span class="valor" id="valorFuente">18px</span>
                 </div>
-
-                <div class="ajuste-fila">
+                <div class="ajuste-compacto">
                     <label>Grosor:</label>
                     <select id="selectGrosor" onchange="aplicarAjustes()">
                         <option value="300">Ligera</option>
@@ -373,13 +392,11 @@
                         <option value="900">Súper negrita</option>
                     </select>
                 </div>
-
-                <div class="ajuste-fila">
-                    <label>Color de letra:</label>
+                <div class="ajuste-compacto">
+                    <label>Color:</label>
                     <input type="color" id="colorFuente" value="#000000" onchange="aplicarAjustes()">
                 </div>
-
-                <div class="ajuste-fila">
+                <div class="ajuste-compacto">
                     <label>Alineación:</label>
                     <select id="selectAlineacion" onchange="aplicarAjustes()">
                         <option value="left" selected>Izquierda</option>
@@ -388,92 +405,74 @@
                         <option value="justify">Justificada</option>
                     </select>
                 </div>
-
-                <div class="ajuste-fila">
-                    <label>Espacio entre líneas:</label>
+                <div class="ajuste-compacto">
+                    <label>Interlineado:</label>
                     <input type="range" id="sliderLineHeight" min="1.0" max="2.0" step="0.1" value="1.4" oninput="aplicarAjustes()">
                     <span class="valor" id="valorLineHeight">1.4</span>
                 </div>
-
-                <div class="ajuste-fila">
-                    <label>Espacio entre letras:</label>
+                <div class="ajuste-compacto">
+                    <label>Esp. letras:</label>
                     <input type="range" id="sliderLetterSpacing" min="-1" max="3" step="0.5" value="0" oninput="aplicarAjustes()">
                     <span class="valor" id="valorLetterSpacing">0px</span>
                 </div>
             </div>
 
-            <!-- 📐 SECCIÓN ETIQUETA -->
-            <div class="seccion-ajustes">
-                <h4>📐 Etiqueta</h4>
-
-                <div class="ajuste-fila">
-                    <label>Ancho de la etiqueta:</label>
+            <div class="tab-content" id="tabEtiqueta">
+                <div class="ajuste-compacto">
+                    <label>Ancho:</label>
                     <input type="range" id="sliderAncho" min="14" max="19" step="0.5" value="16" oninput="aplicarAjustes()">
                     <span class="valor" id="valorAncho">16cm</span>
                 </div>
-
-                <div class="ajuste-fila">
-                    <label>Alto de la etiqueta:</label>
+                <div class="ajuste-compacto">
+                    <label>Alto:</label>
                     <input type="range" id="sliderAlto" min="8" max="12" step="0.5" value="9.22" oninput="aplicarAjustes()">
                     <span class="valor" id="valorAlto">9.22cm</span>
                 </div>
-
-                <div class="ajuste-fila">
-                    <label>Separación entre etiquetas:</label>
+                <div class="ajuste-compacto">
+                    <label>Separación:</label>
                     <input type="range" id="sliderSeparacion" min="5" max="30" value="15" oninput="aplicarAjustes()">
                     <span class="valor" id="valorSeparacion">15mm</span>
                 </div>
-
-                <div class="ajuste-fila">
-                    <label>Grosor del borde:</label>
+                <div class="ajuste-compacto">
+                    <label>Borde:</label>
                     <input type="range" id="sliderBorde" min="1" max="8" value="3" oninput="aplicarAjustes()">
                     <span class="valor" id="valorBorde">3px</span>
                 </div>
-
-                <div class="ajuste-fila">
-                    <label>Color del borde:</label>
+                <div class="ajuste-compacto">
+                    <label>Color borde:</label>
                     <input type="color" id="colorBorde" value="#000000" onchange="aplicarAjustes()">
                 </div>
-
-                <div class="ajuste-fila">
-                    <label>Padding interno:</label>
+                <div class="ajuste-compacto">
+                    <label>Padding:</label>
                     <input type="range" id="sliderPadding" min="0" max="1" step="0.05" value="0.25" oninput="aplicarAjustes()">
                     <span class="valor" id="valorPadding">0.25cm</span>
                 </div>
             </div>
 
-            <!-- 🖼️ SECCIÓN LOGO -->
-            <div class="seccion-ajustes">
-                <h4>🖼️ Logo</h4>
-
-                <div class="ajuste-fila">
-                    <label>Mostrar logo:</label>
+            <div class="tab-content" id="tabLogo">
+                <div class="ajuste-compacto">
+                    <label>Mostrar:</label>
                     <input type="checkbox" id="checkLogo" checked onchange="aplicarAjustes()">
                 </div>
-
-                <div class="ajuste-fila">
-                    <label>Tamaño del logo:</label>
+                <div class="ajuste-compacto">
+                    <label>Tamaño:</label>
                     <input type="range" id="sliderLogoSize" min="3" max="8" step="0.5" value="5.32" oninput="aplicarAjustes()">
                     <span class="valor" id="valorLogoSize">5.32cm</span>
                 </div>
-
-                <div class="ajuste-fila">
-                    <label>Posición del logo:</label>
+                <div class="ajuste-compacto">
+                    <label>Posición:</label>
                     <select id="selectPosLogo" onchange="aplicarAjustes()">
-                        <option value="bottom-right" selected>Abajo - Derecha</option>
-                        <option value="bottom-left">Abajo - Izquierda</option>
-                        <option value="top-right">Arriba - Derecha</option>
-                        <option value="top-left">Arriba - Izquierda</option>
+                        <option value="bottom-right" selected>Abajo - Der.</option>
+                        <option value="bottom-left">Abajo - Izq.</option>
+                        <option value="top-right">Arriba - Der.</option>
+                        <option value="top-left">Arriba - Izq.</option>
                     </select>
                 </div>
             </div>
 
-            <!-- 📄 SECCIÓN HOJA -->
-            <div class="seccion-ajustes">
-                <h4>📄 Hoja</h4>
-
-                <div class="ajuste-fila">
-                    <label>Margen superior:</label>
+            <div class="tab-content" id="tabHoja">
+                <div class="ajuste-compacto">
+                    <label>Margen sup:</label>
                     <input type="range" id="sliderMargenSup" min="5" max="30" value="15" oninput="aplicarAjustes()">
                     <span class="valor" id="valorMargenSup">15mm</span>
                 </div>
@@ -492,6 +491,14 @@
         let totalEtiquetasActuales = 0;
         let etiquetaActual = 1;
 
+        function cambiarTab(event, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
         window.addEventListener('load', function() {
             document.getElementById('inputArchivo').value = '';
             document.getElementById('inputBusqueda').value = '';
@@ -509,9 +516,7 @@
             etiquetaActual = 1;
         });
 
-        // ✅ FUNCIÓN MAESTRA DE AJUSTES
         function aplicarAjustes() {
-            // Leer todos los valores
             const fuente = document.getElementById('selectFuente').value;
             const tamaño = document.getElementById('sliderFuente').value;
             const grosor = document.getElementById('selectGrosor').value;
@@ -533,7 +538,6 @@
 
             const margenSup = document.getElementById('sliderMargenSup').value;
 
-            // Actualizar valores mostrados
             document.getElementById('valorFuente').textContent = tamaño + 'px';
             document.getElementById('valorLineHeight').textContent = lineHeight;
             document.getElementById('valorLetterSpacing').textContent = letterSpacing + 'px';
@@ -545,7 +549,6 @@
             document.getElementById('valorLogoSize').textContent = logoSize + 'cm';
             document.getElementById('valorMargenSup').textContent = margenSup + 'mm';
 
-            // Calcular posición del logo
             const logoStyles = {
                 'bottom-right': 'bottom: 0.25cm; right: 0.25cm;',
                 'bottom-left': 'bottom: 0.25cm; left: 0.25cm;',
@@ -553,7 +556,6 @@
                 'top-left': 'top: 0.25cm; left: 0.25cm;'
             };
 
-            // Aplicar estilos dinámicos a todas las etiquetas
             let styleTag = document.getElementById('estilos-dinamicos');
             if (!styleTag) {
                 styleTag = document.createElement('style');
@@ -587,7 +589,6 @@
             `;
         }
 
-        // ✅ RESETear AJUSTES
         function resetearAjustes() {
             document.getElementById('selectFuente').value = 'Arial';
             document.getElementById('sliderFuente').value = 18;
