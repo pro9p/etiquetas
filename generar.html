@@ -141,27 +141,33 @@
         }
         .tab-content.active {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* ✅ COLUMNAS MÁS ANCHAS */
             gap: 8px 15px;
         }
 
+        /* ✅ FILA COMPACTA CON MÁS ESPACIO PARA LAS ETIQUETAS */
         .ajuste-compacto {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             font-size: 12px;
+            min-width: 0; /* Importante para que el texto se corte si es necesario */
         }
         .ajuste-compacto label {
-            flex: 0 0 90px;
+            flex: 0 0 110px; /* ✅ MÁS ANCHO PARA QUE NO SE CORTE EL TEXTO */
             font-size: 12px;
             font-weight: bold;
             color: #555;
             text-align: right;
+            white-space: nowrap; /* Evita que el texto se rompa en dos líneas */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Si aún no cabe, muestra "..." */
         }
         .ajuste-compacto input[type="range"] {
             flex: 1;
             cursor: pointer;
             height: 4px;
+            min-width: 0;
         }
         .ajuste-compacto select,
         .ajuste-compacto input[type="number"],
@@ -172,6 +178,7 @@
             border: 1px solid #ccc;
             border-radius: 3px;
             cursor: pointer;
+            min-width: 0;
         }
         .ajuste-compacto input[type="color"] {
             flex: 1;
@@ -180,6 +187,7 @@
             border: 1px solid #ccc;
             border-radius: 3px;
             cursor: pointer;
+            min-width: 0;
         }
         .ajuste-compacto .valor {
             flex: 0 0 45px;
@@ -315,7 +323,7 @@
 <body>
 
     <div class="panel-control no-imprimir">
-        <h2>🔍 GENERADOR DE ETIQUETAS</h2>
+        <h2>🔍 GENERAR ETIQUETAS </h2>
         
         <div class="form-group">
             <label>1. Sube tu archivo Word (.docx):</label>
@@ -342,7 +350,7 @@
             <div class="form-group">
                 <label>🔎 Ir a la etiqueta N°</label>
                 <div class="navegador-controles">
-                    <input type="number" id="inputIrEtiqueta" placeholder="Ej: 25" min="1">
+                    <input type="number" id="inputIrEtiqueta" placeholder=" " min="1">
                     <button class="btn-ir" onclick="irAEtiqueta()">Ir</button>
                 </div>
             </div>
@@ -355,10 +363,10 @@
 
         <div class="panel-ajustes" id="panelAjustes">
             <div class="tabs-ajustes">
-                <button class="tab-btn active" onclick="cambiarTab(event, 'tabTexto')"> Texto</button>
-                <button class="tab-btn" onclick="cambiarTab(event, 'tabEtiqueta')"> Etiqueta</button>
-                <button class="tab-btn" onclick="cambiarTab(event, 'tabLogo')"> Logo</button>
-                <button class="tab-btn" onclick="cambiarTab(event, 'tabHoja')"> Hoja</button>
+                <button class="tab-btn active" onclick="cambiarTab(event, 'tabTexto')">📝 Texto</button>
+                <button class="tab-btn" onclick="cambiarTab(event, 'tabEtiqueta')">📐 Etiqueta</button>
+                <button class="tab-btn" onclick="cambiarTab(event, 'tabLogo')">🖼️ Logo</button>
+                <button class="tab-btn" onclick="cambiarTab(event, 'tabHoja')">📄 Hoja</button>
             </div>
 
             <div class="tab-content active" id="tabTexto">
@@ -375,7 +383,6 @@
                         <option value="Courier New">Courier New</option>
                     </select>
                 </div>
-                <!-- ✅ DESPLEGABLE EDITABLE (input + datalist) -->
                 <div class="ajuste-compacto">
                     <label>Tamaño:</label>
                     <input type="text" id="selectTamaño" list="listaTamaños" value="18" oninput="aplicarAjustes()" style="flex:1;">
