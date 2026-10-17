@@ -71,7 +71,7 @@
         .btn-imprimir { background-color: #28a745; display: none; }
         .btn-imprimir:hover { background-color: #218838; }
 
-        /* ✅ VENTANA MODAL (FLOTANTE) PARA LAS GRs */
+        /* ✅ VENTANA MODAL */
         .modal-fondo {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center;
@@ -100,10 +100,8 @@
         
         .btn-agregar-gr {
             background: #e3f2fd; color: #0d47a1; border: 1px solid #90caf9; padding: 8px 15px;
-            font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 13px;
-            margin-bottom: 15px;
+            font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 13px; margin-bottom: 15px;
         }
-        .btn-agregar-gr:hover { background: #bbdefb; }
         .btn-eliminar-gr {
             background: #dc3545; color: white; border: none; padding: 6px 10px;
             border-radius: 3px; cursor: pointer; font-size: 12px;
@@ -117,7 +115,7 @@
         .btn-modal { padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; border: none; font-size: 14px;}
         .btn-cancelar { background: #6c757d; color: white; }
         .btn-aplicar { background: #28a745; color: white; }
-        .btn-generar-modal { background: #ff9800; color: white; margin-right: auto; } /* Botón extra a la izquierda */
+        .btn-generar-modal { background: #ff9800; color: white; margin-right: auto; }
 
         /* PANEL DE AJUSTES */
         .panel-ajustes {
@@ -212,21 +210,18 @@
             </div>
         </div>
 
-        <!-- ✅ BOTONES DE ACCIÓN -->
         <div class="contenedor-botones-accion" id="filaBotonesAccion">
             <button class="btn-accion btn-generar" id="btnGenerar" onclick="generarEtiquetas()">🔄 Generar</button>
             <button class="btn-accion btn-grs" id="btnToggleGRs" onclick="abrirModalGRs()">🛠️ Personalizar GRs</button>
             <button class="btn-accion btn-imprimir" id="btnImprimir" onclick="window.print()">🖨️ Imprimir</button>
         </div>
 
-        <!-- PANEL DE AJUSTES -->
         <div class="panel-ajustes" id="panelAjustes">
             <div class="tabs-ajustes">
                 <button class="tab-btn active" onclick="cambiarTab(event, 'tabTexto')">📝 Texto</button>
                 <button class="tab-btn" onclick="cambiarTab(event, 'tabEtiqueta')">📐 Etiqueta</button>
                 <button class="tab-btn" onclick="cambiarTab(event, 'tabLogo')">🖼️ Logo</button>
             </div>
-
             <div class="tab-content active" id="tabTexto">
                 <div class="ajuste-compacto">
                     <label>Fuente:</label>
@@ -251,15 +246,7 @@
                         <option value="700" selected>Negrita</option>
                     </select>
                 </div>
-                <div class="ajuste-compacto">
-                    <label>Alineación:</label>
-                    <select id="selectAlineacion" onchange="aplicarAjustes()">
-                        <option value="left" selected>Izquierda</option>
-                        <option value="center">Centrada</option>
-                    </select>
-                </div>
             </div>
-
             <div class="tab-content" id="tabEtiqueta">
                 <div class="ajuste-compacto">
                     <label>Ancho:</label>
@@ -271,13 +258,7 @@
                     <input type="range" id="sliderAlto" min="8" max="12" step="0.5" value="9.22" oninput="aplicarAjustes()">
                     <span class="valor" id="valorAlto">9.22cm</span>
                 </div>
-                <div class="ajuste-compacto">
-                    <label>Separación:</label>
-                    <input type="range" id="sliderSeparacion" min="5" max="30" value="15" oninput="aplicarAjustes()">
-                    <span class="valor" id="valorSeparacion">15mm</span>
-                </div>
             </div>
-
             <div class="tab-content" id="tabLogo">
                 <div class="ajuste-compacto">
                     <label>Mostrar:</label>
@@ -289,12 +270,11 @@
                     <span class="valor" id="valorLogoSize">5.32cm</span>
                 </div>
             </div>
-
             <button class="btn-reset-ajustes" onclick="resetearAjustes()">↺ Restaurar valores por defecto</button>
         </div>
     </div>
 
-    <!-- ✅ VENTANA MODAL (FLOTANTE) PARA GRs CON BOTÓN GENERAR -->
+    <!-- ✅ VENTANA MODAL -->
     <div class="modal-fondo" id="modalGRs">
         <div class="modal-caja">
             <div class="modal-header">
@@ -303,7 +283,7 @@
             </div>
             <div class="modal-body">
                 <p style="font-size: 13px; color: #555; margin-bottom: 15px;">
-                    Agrega las GRs y la cantidad de etiquetas. Al darle a "Generar Etiquetas", el sistema usará estas cantidades exactas.
+                    Agrega las GRs y la cantidad. Al darle a "Generar Etiquetas", se usarán estas cantidades.
                 </p>
                 <table class="tabla-grs">
                     <thead>
@@ -319,7 +299,6 @@
                 <div class="total-etiquetas" id="totalEtiquetasTexto">Total: 0 etiquetas</div>
             </div>
             <div class="modal-footer">
-                <!-- ✅ NUEVO BOTÓN DE GENERAR ADENTRO DEL MODAL -->
                 <button class="btn-modal btn-generar-modal" onclick="generarEtiquetasDesdeModal()">🔄 Generar Etiquetas</button>
                 <button class="btn-modal btn-cancelar" onclick="cerrarModalGRs()">Cancelar</button>
                 <button class="btn-modal btn-aplicar" onclick="aplicarGRs()">Aplicar y Cerrar</button>
@@ -334,8 +313,6 @@
         let etiquetasWord = [];
         let totalEtiquetasActuales = 0;
         let etiquetaActual = 1;
-        
-        // ✅ VARIABLE PARA GUARDAR LA LISTA DE GRs APLICADA
         let listaGRsAplicada = []; 
 
         function cambiarTab(event, tabId) {
@@ -345,14 +322,8 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // ✅ LÓGICA DE LA VENTANA MODAL
-        function abrirModalGRs() {
-            document.getElementById('modalGRs').style.display = 'flex';
-        }
-
-        function cerrarModalGRs() {
-            document.getElementById('modalGRs').style.display = 'none';
-        }
+        function abrirModalGRs() { document.getElementById('modalGRs').style.display = 'flex'; }
+        function cerrarModalGRs() { document.getElementById('modalGRs').style.display = 'none'; }
 
         function agregarFilaGR() {
             const tbody = document.getElementById('cuerpoTablaGRs');
@@ -369,34 +340,25 @@
 
         function actualizarTotalModal() {
             let total = 0;
-            document.querySelectorAll('.input-cantidad').forEach(input => {
-                total += parseInt(input.value) || 0;
-            });
+            document.querySelectorAll('.input-cantidad').forEach(input => total += parseInt(input.value) || 0);
             document.getElementById('totalEtiquetasTexto').textContent = 'Total: ' + total + ' etiquetas';
         }
 
-        // ✅ LEER Y GUARDAR LAS GRs
         function procesarGRsDelModal() {
             const filas = document.querySelectorAll('#cuerpoTablaGRs tr');
             const nuevaLista = [];
-            
             filas.forEach(fila => {
                 const gr = fila.querySelector('.input-gr').value.trim();
                 const cantidad = parseInt(fila.querySelector('.input-cantidad').value) || 0;
-                
                 if (gr !== '' && cantidad > 0) {
-                    for (let c = 0; c < cantidad; c++) {
-                        nuevaLista.push(gr);
-                    }
+                    for (let c = 0; c < cantidad; c++) nuevaLista.push(gr);
                 }
             });
             return nuevaLista;
         }
 
-        // ✅ BOTÓN "APLICAR Y CERRAR" (Solo guarda y actualiza el botón gris)
         function aplicarGRs() {
             listaGRsAplicada = procesarGRsDelModal();
-            
             const btn = document.getElementById('btnToggleGRs');
             if (listaGRsAplicada.length > 0) {
                 btn.innerHTML = '✅ GRs Cargadas (' + listaGRsAplicada.length + ')';
@@ -408,31 +370,24 @@
             cerrarModalGRs();
         }
 
-        // ✅ BOTÓN "GENERAR ETIQUETAS" (Adentro del modal)
         function generarEtiquetasDesdeModal() {
             listaGRsAplicada = procesarGRsDelModal();
-            if (listaGRsAplicada.length === 0) {
-                alert("⚠️ Agrega al menos una GR con cantidad mayor a 0.");
-                return;
-            }
-            cerrarModalGRs(); // Cerramos la ventana
-            generarEtiquetas(true); // Llamamos a la función principal, indicando que venga del modal
+            if (listaGRsAplicada.length === 0) { alert("⚠️ Agrega al menos una GR."); return; }
+            cerrarModalGRs(); 
+            generarEtiquetas(true);
         }
 
         function aplicarAjustes() {
             const fuente = document.getElementById('selectFuente').value;
             const tamaño = document.getElementById('selectTamaño').value;
             const grosor = document.getElementById('selectGrosor').value;
-            const alineacion = document.getElementById('selectAlineacion').value;
             const ancho = document.getElementById('sliderAncho').value;
             const alto = document.getElementById('sliderAlto').value;
-            const separacion = document.getElementById('sliderSeparacion').value;
             const mostrarLogo = document.getElementById('checkLogo').checked;
             const logoSize = document.getElementById('sliderLogoSize').value;
 
             document.getElementById('valorAncho').textContent = ancho + 'cm';
             document.getElementById('valorAlto').textContent = alto + 'cm';
-            document.getElementById('valorSeparacion').textContent = separacion + 'mm';
             document.getElementById('valorLogoSize').textContent = logoSize + 'cm';
 
             let styleTag = document.getElementById('estilos-dinamicos');
@@ -443,8 +398,7 @@
             }
             styleTag.innerHTML = `
                 .etiqueta { width: ${ancho}cm !important; height: ${alto}cm !important; }
-                .etiqueta + .etiqueta { margin-top: ${separacion}mm !important; }
-                .texto-etiqueta { font-family: ${fuente}, Arial, sans-serif !important; font-size: ${tamaño}px !important; font-weight: ${grosor} !important; text-align: ${alineacion} !important; }
+                .texto-etiqueta { font-family: ${fuente}, Arial, sans-serif !important; font-size: ${tamaño}px !important; font-weight: ${grosor} !important; }
                 .logo-dimexa { display: ${mostrarLogo ? 'block' : 'none'} !important; width: ${logoSize}cm !important; }
             `;
         }
@@ -453,10 +407,8 @@
             document.getElementById('selectFuente').value = 'Arial';
             document.getElementById('selectTamaño').value = 18;
             document.getElementById('selectGrosor').value = '700';
-            document.getElementById('selectAlineacion').value = 'left';
             document.getElementById('sliderAncho').value = 16;
             document.getElementById('sliderAlto').value = 9.22;
-            document.getElementById('sliderSeparacion').value = 15;
             document.getElementById('checkLogo').checked = true;
             document.getElementById('sliderLogoSize').value = 5.32;
             aplicarAjustes();
@@ -499,7 +451,6 @@
             document.getElementById('panelAjustes').style.display = 'block';
             document.getElementById('btnImprimir').style.display = 'none';
             
-            // Limpiar GRs y reiniciar
             listaGRsAplicada = [];
             document.getElementById('cuerpoTablaGRs').innerHTML = '';
             document.getElementById('totalEtiquetasTexto').textContent = 'Total: 0 etiquetas';
@@ -510,16 +461,14 @@
             document.getElementById('contenedor-etiquetas').innerHTML = '';
         }
 
-        // ✅ FUNCIÓN PRINCIPAL DE GENERACIÓN
         function generarEtiquetas(desdeModal = false) {
             const editor = document.getElementById('editorTexto');
             let textoHTML = editor.innerHTML;
             if (textoHTML.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, '').trim() === "") { alert("⚠️ Texto vacío."); return; }
 
             let totalCajas;
-
-            // Si viene del modal, o si ya hay GRs aplicadas y no se tocó el input a mano, usamos las GRs.
-            if (desdeModal || (listaGRsAplicada.length > 0 && document.getElementById('inputTotalCajas').value == listaGRsAplicada.length)) {
+            // Si hay GRs cargadas, siempre usamos su total
+            if (listaGRsAplicada.length > 0) {
                 totalCajas = listaGRsAplicada.length;
             } else {
                 totalCajas = parseInt(document.getElementById('inputTotalCajas').value);
@@ -538,43 +487,77 @@
                 .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
             const lineasOriginales = textoPlano.split('\n');
 
+            // AGRUPAR GRs PARA NUMERACIÓN LOCAL
+            const conteoGRs = {};
+            if (listaGRsAplicada.length > 0) {
+                listaGRsAplicada.forEach(gr => {
+                    conteoGRs[gr] = (conteoGRs[gr] || 0) + 1;
+                });
+            } else {
+                conteoGRs['default'] = totalCajas;
+            }
+
+            const cajaActualPorGR = {};
+            for (let gr in conteoGRs) { cajaActualPorGR[gr] = 1; }
+
             for (let i = 0; i < totalHojas; i++) {
                 const hoja = document.createElement('div');
                 hoja.className = 'hoja';
 
                 for (let j = 0; j < 2; j++) {
-                    const numeroCajaActual = (i * 2) + j + 1;
-                    if (numeroCajaActual > totalCajas) break;
-
-                    const numeroFormateado = String(numeroCajaActual).padStart(2, '0');
-                    const totalFormateado = String(totalCajas).padStart(2, '0');
+                    const numeroCajaGlobal = (i * 2) + j + 1;
+                    if (numeroCajaGlobal > totalCajas) break;
 
                     let grDeEstaEtiqueta = null;
-                    if (listaGRsAplicada.length > 0 && numeroCajaActual <= listaGRsAplicada.length) {
-                        grDeEstaEtiqueta = listaGRsAplicada[numeroCajaActual - 1];
+                    if (listaGRsAplicada.length > 0 && numeroCajaGlobal <= listaGRsAplicada.length) {
+                        grDeEstaEtiqueta = listaGRsAplicada[numeroCajaGlobal - 1];
+                    }
+
+                    let numeroFormateado, totalFormateado;
+                    
+                    if (grDeEstaEtiqueta) {
+                        const totalDeEstaGR = conteoGRs[grDeEstaEtiqueta];
+                        const numeroLocal = cajaActualPorGR[grDeEstaEtiqueta];
+                        numeroFormateado = String(numeroLocal).padStart(2, '0');
+                        totalFormateado = String(totalDeEstaGR).padStart(2, '0');
+                        cajaActualPorGR[grDeEstaEtiqueta]++;
+                    } else {
+                        numeroFormateado = String(numeroCajaGlobal).padStart(2, '0');
+                        totalFormateado = String(totalCajas).padStart(2, '0');
                     }
 
                     let lineasFinales = lineasOriginales.map(linea => {
                         let nuevaLinea = linea;
-                        if (nuevaLinea.toUpperCase().includes('CAJAS')) {
-                            nuevaLinea = nuevaLinea.replace(/(\d+)\s*\/\s*(\d+)/, `${numeroFormateado}/ ${totalFormateado}`);
+                        
+                        if (grDeEstaEtiqueta) {
+                            const regexGR = /(GU[IÍ]AS?\s*N[°º]?:?\s*).*/i;
+                            if (regexGR.test(nuevaLinea)) {
+                                nuevaLinea = nuevaLinea.replace(regexGR, `$1${grDeEstaEtiqueta}`);
+                            }
                         }
-                        if (grDeEstaEtiqueta && (nuevaLinea.toUpperCase().includes('GUÍAS') || nuevaLinea.toUpperCase().includes('GUIA'))) {
-                            nuevaLinea = nuevaLinea.replace(/(GUÍAS?\s*N°:\s*)(.*)/i, `$1${grDeEstaEtiqueta}`);
+
+                        const regexCajas = /(\d+)\s*\/\s*(\d+)/;
+                        if (regexCajas.test(nuevaLinea) && nuevaLinea.toUpperCase().includes('CAJA')) {
+                            nuevaLinea = nuevaLinea.replace(regexCajas, `${numeroFormateado}/ ${totalFormateado}`);
                         }
+                        
                         return nuevaLinea;
                     });
 
                     let textoFinal = lineasFinales.map(l => l.replace(/ /g, '&nbsp;')).join('<br>');
+                    
                     textoFinal = textoFinal
-                        .replace(/DE:/g, '<span>DE:</span>').replace(/PARA:/g, '<span>PARA:</span>')
-                        .replace(/DIRECCIÓN:/g, '<span>DIRECCIÓN:</span>').replace(/DIRECCION:/g, '<span>DIRECCION:</span>')
-                        .replace(/GUÍAS&nbsp;N°:/g, '<span>GUÍAS&nbsp;N°:</span>').replace(/GUIA&nbsp;N°:/g, '<span>GUIA&nbsp;N°:</span>')
-                        .replace(/N°&nbsp;CAJAS:/g, '<span>N°&nbsp;CAJAS:</span>').replace(/N°\s*CAJAS:/g, '<span>N° CAJAS:</span>');
+                        .replace(/DE:/g, '<span>DE:</span>')
+                        .replace(/PARA:/g, '<span>PARA:</span>')
+                        .replace(/DIRECCIÓN:/g, '<span>DIRECCIÓN:</span>')
+                        .replace(/DIRECCION:/g, '<span>DIRECCION:</span>')
+                        .replace(/GUÍAS&nbsp;N[°º]:/g, '<span>GUÍAS&nbsp;N°:</span>')
+                        .replace(/GUIA&nbsp;N[°º]:/g, '<span>GUIA&nbsp;N°:</span>')
+                        .replace(/N[°º]&nbsp;CAJAS:/g, '<span>N°&nbsp;CAJAS:</span>');
 
                     const etiqueta = document.createElement('div');
                     etiqueta.className = 'etiqueta';
-                    etiqueta.id = 'etiqueta-' + numeroCajaActual;
+                    etiqueta.id = 'etiqueta-' + numeroCajaGlobal;
                     etiqueta.innerHTML = `
                         <div class="texto-etiqueta" contenteditable="true">${textoFinal}</div>
                         <img src="logo.png" class="logo-dimexa" alt="Logo Dimexa">
