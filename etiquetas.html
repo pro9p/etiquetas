@@ -117,6 +117,7 @@
         .btn-modal { padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; border: none; font-size: 14px;}
         .btn-cancelar { background: #6c757d; color: white; }
         .btn-aplicar { background: #28a745; color: white; }
+        .btn-generar-modal { background: #ff9800; color: white; margin-right: auto; } /* Botón extra a la izquierda */
 
         /* PANEL DE AJUSTES */
         .panel-ajustes {
@@ -293,7 +294,7 @@
         </div>
     </div>
 
-    <!-- ✅ VENTANA MODAL (FLOTANTE) PARA GRs -->
+    <!-- ✅ VENTANA MODAL (FLOTANTE) PARA GRs CON BOTÓN GENERAR -->
     <div class="modal-fondo" id="modalGRs">
         <div class="modal-caja">
             <div class="modal-header">
@@ -302,7 +303,7 @@
             </div>
             <div class="modal-body">
                 <p style="font-size: 13px; color: #555; margin-bottom: 15px;">
-                    Agrega las GRs y la cantidad de etiquetas para cada una. El sistema calculará el total.
+                    Agrega las GRs y la cantidad de etiquetas. Al darle a "Generar Etiquetas", el sistema usará estas cantidades exactas.
                 </p>
                 <table class="tabla-grs">
                     <thead>
@@ -318,6 +319,8 @@
                 <div class="total-etiquetas" id="totalEtiquetasTexto">Total: 0 etiquetas</div>
             </div>
             <div class="modal-footer">
+                <!-- ✅ NUEVO BOTÓN DE GENERAR ADENTRO DEL MODAL -->
+                <button class="btn-modal btn-generar-modal" onclick="generarEtiquetasDesdeModal()">🔄 Generar Etiquetas</button>
                 <button class="btn-modal btn-cancelar" onclick="cerrarModalGRs()">Cancelar</button>
                 <button class="btn-modal btn-aplicar" onclick="aplicarGRs()">Aplicar y Cerrar</button>
             </div>
@@ -355,7 +358,7 @@
             const tbody = document.getElementById('cuerpoTablaGRs');
             const fila = document.createElement('tr');
             fila.innerHTML = `
-                <td><input type="text" class="input-gr" placeholder="Ej: GR:T711-510" oninput="actualizarTotalModal()"></td>
+                <td><input type="text" class="input-gr" placeholder="Ej: T711-3517" oninput="actualizarTotalModal()"></td>
                 <td><input type="number" class="input-cantidad" value="1" min="1" oninput="actualizarTotalModal()"></td>
                 <td style="text-align: center;"><button class="btn-eliminar-gr" onclick="this.closest('tr').remove(); actualizarTotalModal();">🗑️</button></td>
             `;
@@ -372,8 +375,8 @@
             document.getElementById('totalEtiquetasTexto').textContent = 'Total: ' + total + ' etiquetas';
         }
 
-        // ✅ APLICAR LAS GRs Y GUARDARLAS EN MEMORIA
-        function aplicarGRs() {
+        // ✅ LEER Y GUARDAR LAS GRs
+        function procesarGRsDelModal() {
             const filas = document.querySelectorAll('#cuerpoTablaGRs tr');
             const nuevaLista = [];
             
@@ -387,24 +390,33 @@
                     }
                 }
             });
+            return nuevaLista;
+        }
 
-            listaGRsAplicada = nuevaLista;
+        // ✅ BOTÓN "APLICAR Y CERRAR" (Solo guarda y actualiza el botón gris)
+        function aplicarGRs() {
+            listaGRsAplicada = procesarGRsDelModal();
             
-            // Cambiar el color del botón para indicar que hay GRs aplicadas
             const btn = document.getElementById('btnToggleGRs');
             if (listaGRsAplicada.length > 0) {
-                btn.innerHTML = '✅ GRs Personalizadas (' + listaGRsAplicada.length + ')';
+                btn.innerHTML = '✅ GRs Cargadas (' + listaGRsAplicada.length + ')';
                 btn.style.background = '#007bff';
             } else {
                 btn.innerHTML = '🛠️ Personalizar GRs';
                 btn.style.background = '#6c757d';
             }
-
             cerrarModalGRs();
-            
-            if (listaGRsAplicada.length > 0) {
-                alert("✅ Se han cargado " + listaGRsAplicada.length + " GRs personalizadas. Ahora dale a 'Generar'.");
+        }
+
+        // ✅ BOTÓN "GENERAR ETIQUETAS" (Adentro del modal)
+        function generarEtiquetasDesdeModal() {
+            listaGRsAplicada = procesarGRsDelModal();
+            if (listaGRsAplicada.length === 0) {
+                alert("⚠️ Agrega al menos una GR con cantidad mayor a 0.");
+                return;
             }
+            cerrarModalGRs(); // Cerramos la ventana
+            generarEtiquetas(true); // Llamamos a la función principal, indicando que venga del modal
         }
 
         function aplicarAjustes() {
@@ -487,7 +499,7 @@
             document.getElementById('panelAjustes').style.display = 'block';
             document.getElementById('btnImprimir').style.display = 'none';
             
-            // Limpiar GRs y reiniciar el botón
+            // Limpiar GRs y reiniciar
             listaGRsAplicada = [];
             document.getElementById('cuerpoTablaGRs').innerHTML = '';
             document.getElementById('totalEtiquetasTexto').textContent = 'Total: 0 etiquetas';
@@ -498,20 +510,22 @@
             document.getElementById('contenedor-etiquetas').innerHTML = '';
         }
 
-        function generarEtiquetas() {
+        // ✅ FUNCIÓN PRINCIPAL DE GENERACIÓN
+        function generarEtiquetas(desdeModal = false) {
             const editor = document.getElementById('editorTexto');
             let textoHTML = editor.innerHTML;
             if (textoHTML.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, '').trim() === "") { alert("⚠️ Texto vacío."); return; }
 
-            // ✅ SI HAY GRs EN EL MODAL, EL TOTAL DE ETIQUETAS SE BASA EN ELLAS. SI NO, EN EL INPUT.
             let totalCajas;
-            if (listaGRsAplicada.length > 0) {
+
+            // Si viene del modal, o si ya hay GRs aplicadas y no se tocó el input a mano, usamos las GRs.
+            if (desdeModal || (listaGRsAplicada.length > 0 && document.getElementById('inputTotalCajas').value == listaGRsAplicada.length)) {
                 totalCajas = listaGRsAplicada.length;
-                document.getElementById('inputTotalCajas').value = totalCajas; // Sincronizar el input
             } else {
                 totalCajas = parseInt(document.getElementById('inputTotalCajas').value);
-                if (isNaN(totalCajas) || totalCajas < 1) { alert("⚠️ Número de etiquetas inválido."); return; }
             }
+
+            if (isNaN(totalCajas) || totalCajas < 1) { alert("⚠️ Número de etiquetas inválido."); return; }
 
             totalEtiquetasActuales = totalCajas;
             etiquetaActual = 1;
