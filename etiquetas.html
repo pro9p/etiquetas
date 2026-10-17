@@ -13,7 +13,6 @@
         .panel-control {
             background: white; padding: 20px; margin: 20px auto; max-width: 1100px;
             border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center;
-            position: relative;
         }
         .panel-control h2 { margin-top: 0; color: #333; }
         .form-group { margin-bottom: 15px; text-align: left; }
@@ -40,8 +39,24 @@
         .btn-buscar { background-color: #007bff; }
         .btn-buscar:hover { background-color: #0056b3; }
         
+        /* ✅ BOTONES DE ACCIÓN */
+        .botones-accion {
+            display: flex; gap: 10px; margin-top: 15px; display: none;
+        }
+        .btn-accion {
+            flex: 1; padding: 12px; font-size: 15px; font-weight: bold;
+            color: white; border: none; border-radius: 5px; cursor: pointer;
+        }
+        .btn-generar { background-color: #ff9800; }
+        .btn-generar:hover { background-color: #e68900; }
+        .btn-imprimir { background-color: #28a745; }
+        .btn-imprimir:hover { background-color: #218838; }
+        .btn-grs { background-color: #6c757d; }
+        .btn-grs:hover { background-color: #5a6268; }
+        .btn-grs.activo { background-color: #007bff; }
+
         .fila-cajas {
-            display: flex; gap: 10px; align-items: flex-end; margin-top: 15px;
+            display: flex; gap: 10px; align-items: flex-end; margin-top: 15px; display: none;
         }
         .fila-cajas .form-group { flex: 1; margin-bottom: 0; }
         .fila-cajas .form-group:first-child { flex: 0 0 130px; }
@@ -55,66 +70,59 @@
             background-color: #ffc107; color: black; border: none; padding: 8px 20px;
             font-size: 14px; font-weight: bold; border-radius: 4px; cursor: pointer;
         }
+        .btn-ir:hover { background-color: #e0a800; }
 
-        /* ✅ FILA DE BOTONES DE ACCIÓN (Generar, Imprimir, GRs) */
-        .botones-accion {
-            display: flex; gap: 10px; margin-top: 15px;
-        }
-        .btn-accion {
-            flex: 1; padding: 12px; font-size: 15px; font-weight: bold;
-            color: white; border: none; border-radius: 5px; cursor: pointer; display: none;
-        }
-        .btn-generar { background-color: #ff9800; }
-        .btn-generar:hover { background-color: #e68900; }
-        .btn-imprimir { background-color: #28a745; }
-        .btn-imprimir:hover { background-color: #218838; }
-        .btn-grs { background-color: #6c757d; }
-        .btn-grs:hover { background-color: #5a6268; }
-        .btn-grs.activo { background-color: #007bff; }
-
-        /* ✅ PANEL FLOTANTE DE GRs PERSONALIZADAS */
+        /* ✅ PANEL DE GRs */
         .panel-grs {
-            display: none; /* Oculto por defecto */
-            background: #e3f2fd; border: 2px solid #2196f3; border-radius: 8px;
-            padding: 15px; margin-top: 15px; text-align: left;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: none; background: #e3f2fd; border: 2px solid #2196f3; 
+            border-radius: 8px; padding: 15px; margin-top: 15px; text-align: left;
         }
         .panel-grs h3 { font-size: 15px; color: #0d47a1; margin-bottom: 10px; }
         .panel-grs p { font-size: 12px; color: #555; margin-bottom: 10px; }
         .panel-grs textarea {
             width: 100%; min-height: 100px; padding: 10px;
             border: 1px solid #90caf9; border-radius: 4px;
-            font-family: monospace; font-size: 14px;
+            font-family: monospace; font-size: 14px; margin-bottom: 10px;
         }
+        .btn-limpiar-grs {
+            background: #dc3545; color: white; border: none; padding: 8px 15px;
+            border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold;
+        }
+        .btn-limpiar-grs:hover { background: #c82333; }
 
-        /* PANEL DE AJUSTES (IGUAL) */
+        /* PANEL DE AJUSTES */
         .panel-ajustes {
             display: none; background-color: #f8f9fa; border: 1px solid #007bff;
             border-radius: 6px; padding: 10px; margin-top: 15px; text-align: left;
         }
         .tabs-ajustes { display: flex; gap: 3px; border-bottom: 2px solid #007bff; margin-bottom: 10px; flex-wrap: wrap; }
-        .tab-btn { background: #e9ecef; border: none; padding: 6px 12px; font-size: 12px; font-weight: bold; color: #555; cursor: pointer; border-radius: 4px 4px 0 0; }
+        .tab-btn { background: #e9ecef; border: none; padding: 6px 12px; font-size: 12px; font-weight: bold; color: #555; cursor: pointer; border-radius: 4px 4px 0 0; transition: all 0.2s; }
+        .tab-btn:hover { background: #dee2e6; }
         .tab-btn.active { background: #007bff; color: white; }
         .tab-content { display: none; padding: 8px 0; }
         .tab-content.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 8px 15px; }
         .ajuste-compacto { display: flex; align-items: center; gap: 8px; font-size: 12px; min-width: 0; }
-        .ajuste-compacto label { flex: 0 0 110px; font-size: 12px; font-weight: bold; color: #555; text-align: right; white-space: nowrap; }
+        .ajuste-compacto label { flex: 0 0 110px; font-size: 12px; font-weight: bold; color: #555; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .ajuste-compacto input[type="range"] { flex: 1; cursor: pointer; height: 4px; min-width: 0; }
-        .ajuste-compacto select, .ajuste-compacto input[type="number"], .ajuste-compacto input[type="text"] { flex: 1; padding: 3px 5px; font-size: 12px; border: 1px solid #ccc; border-radius: 3px; }
-        .ajuste-compacto input[type="color"] { flex: 1; height: 24px; padding: 1px; border: 1px solid #ccc; border-radius: 3px; }
+        .ajuste-compacto select, .ajuste-compacto input[type="number"], .ajuste-compacto input[type="text"] { flex: 1; padding: 3px 5px; font-size: 12px; border: 1px solid #ccc; border-radius: 3px; cursor: pointer; min-width: 0; }
+        .ajuste-compacto input[type="color"] { flex: 1; height: 24px; padding: 1px; border: 1px solid #ccc; border-radius: 3px; cursor: pointer; min-width: 0; }
         .ajuste-compacto .valor { flex: 0 0 45px; text-align: right; font-size: 11px; font-weight: bold; color: #007bff; }
+        .ajuste-compacto input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
         .btn-reset-ajustes { background-color: #6c757d; color: white; border: none; padding: 5px 12px; font-size: 11px; border-radius: 3px; cursor: pointer; margin-top: 8px; width: 100%; }
+        .btn-reset-ajustes:hover { background-color: #5a6268; }
 
         .indicador-etiqueta {
             position: fixed; bottom: 30px; left: 30px; background-color: #333; color: white;
-            padding: 10px 18px; border-radius: 25px; font-size: 14px; font-weight: bold; display: none; z-index: 9999;
+            padding: 10px 18px; border-radius: 25px; font-size: 14px; font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: none; z-index: 9999;
         }
         .indicador-etiqueta.visible { display: block; }
 
         .hoja {
             width: 210mm; height: 297mm; background: white; margin: 5mm auto;
             display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-            padding-top: 15mm; padding-bottom: 0; page-break-after: always; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding-top: 15mm; padding-bottom: 0; page-break-after: always;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .hoja:last-child { page-break-after: auto; }
         .etiqueta {
@@ -125,14 +133,20 @@
         .texto-etiqueta {
             flex: 1; font-size: 18px; font-weight: bold; color: black; font-family: Arial, sans-serif;
             white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;
-            line-height: 1.4; padding-right: 10px; outline: none; border: 1px dashed #ccc; padding: 5px; min-height: 50px;
+            line-height: 1.4; padding-right: 10px; outline: none; border: 1px dashed #ccc;
+            padding: 5px; min-height: 50px;
         }
         .texto-etiqueta:focus { border-color: #007bff; background-color: #f0f8ff; }
         .texto-etiqueta span { text-decoration: underline; }
-        .logo-dimexa { position: absolute; bottom: 0.25cm; right: 0.25cm; width: 5.32cm; height: 2.14cm; object-fit: contain; }
+        .logo-dimexa {
+            position: absolute; bottom: 0.25cm; right: 0.25cm; width: 5.32cm; height: 2.14cm; object-fit: contain; pointer-events: none;
+        }
         .etiqueta-resaltada { animation: parpadeo 1s ease-in-out 3; box-shadow: 0 0 0 5px #ffc107; }
-        @keyframes parpadeo { 0% { box-shadow: 0 0 0 5px #ffc107; } 50% { box-shadow: 0 0 0 5px #ff5722; } 100% { box-shadow: 0 0 0 5px #ffc107; } }
-
+        @keyframes parpadeo {
+            0% { box-shadow: 0 0 0 5px #ffc107; }
+            50% { box-shadow: 0 0 0 5px #ff5722; }
+            100% { box-shadow: 0 0 0 5px #ffc107; }
+        }
         @media print {
             body { background-color: white; }
             .hoja { margin: 0; padding-top: 15mm; padding-bottom: 0; box-shadow: none; }
@@ -165,7 +179,7 @@
             <div id="editorTexto" class="editor" contenteditable="true"></div>
         </div>
 
-        <div class="fila-cajas" id="filaCajas" style="display: none;">
+        <div class="fila-cajas" id="filaCajas">
             <div class="form-group">
                 <label>N° de etiquetas</label>
                 <input type="number" id="inputTotalCajas" value="1" min="1">
@@ -179,21 +193,19 @@
             </div>
         </div>
 
-        <!-- ✅ BOTONES DE ACCIÓN (Ahora incluye el botón de GRs) -->
-        <div class="botones-accion" id="filaBotonesAccion" style="display: none;">
+        <!-- ✅ BOTONES DE ACCIÓN -->
+        <div class="botones-accion" id="filaBotonesAccion">
             <button class="btn-accion btn-generar" id="btnGenerar" onclick="generarEtiquetas()">🔄 Generar</button>
             <button class="btn-accion btn-grs" id="btnToggleGRs" onclick="togglePanelGRs()">🛠️ Personalizar GRs</button>
             <button class="btn-accion btn-imprimir" id="btnImprimir" onclick="window.print()">🖨️ Imprimir</button>
         </div>
 
-        <!-- ✅ PANEL FLOTANTE PARA LAS GRs -->
+        <!-- ✅ PANEL OCULTO DE GRs -->
         <div class="panel-grs" id="panelGRs">
             <h3>Personalizar Guías (GRs)</h3>
-            <p>Pega tus GRs (una por línea o separadas por comas). Si hay menos GRs que etiquetas, se repetirá la última para las sobrantes.</p>
-            <textarea id="inputGRsPersonalizadas" placeholder="Ejemplo:
-GR:T711-510
-GR:T711-511
-GR:T711-512"></textarea>
+            <p>Pega tus GRs (una por línea o separadas por comas). Si pones menos de las que necesitas, se repetirá la última.</p>
+            <textarea id="inputGRsPersonalizadas" placeholder="Ejemplo:&#10;GR:T711-510&#10;GR:T711-511&#10;GR:T711-512"></textarea>
+            <button class="btn-limpiar-grs" onclick="limpiarGRs()">🗑️ Limpiar GRs</button>
         </div>
 
         <!-- PANEL DE AJUSTES -->
@@ -286,7 +298,7 @@ GR:T711-512"></textarea>
             document.getElementById(tabId).classList.add('active');
         }
 
-        // ✅ MOSTRAR/OCULTAR PANEL DE GRs
+        // ✅ MOSTRAR/OCULTAR EL PANEL DE GRs
         function togglePanelGRs() {
             const panel = document.getElementById('panelGRs');
             const btn = document.getElementById('btnToggleGRs');
@@ -297,6 +309,12 @@ GR:T711-512"></textarea>
                 panel.style.display = 'none';
                 btn.classList.remove('activo');
             }
+        }
+
+        // ✅ LIMPIAR EL CUADRO DE GRs
+        function limpiarGRs() {
+            document.getElementById('inputGRsPersonalizadas').value = '';
+            document.getElementById('inputGRsPersonalizadas').focus();
         }
 
         function aplicarAjustes() {
@@ -378,8 +396,12 @@ GR:T711-512"></textarea>
             document.getElementById('btnGenerar').style.display = 'block';
             document.getElementById('panelAjustes').style.display = 'block';
             document.getElementById('btnImprimir').style.display = 'none';
-            document.getElementById('panelGRs').style.display = 'none'; // Ocultar GRs al buscar
+            
+            // Al buscar, ocultamos el panel de GRs y lo limpiamos (opcional, pero recomendado)
+            document.getElementById('panelGRs').style.display = 'none';
             document.getElementById('btnToggleGRs').classList.remove('activo');
+            document.getElementById('inputGRsPersonalizadas').value = ''; 
+
             document.getElementById('contenedor-etiquetas').innerHTML = '';
         }
 
@@ -391,7 +413,7 @@ GR:T711-512"></textarea>
             const totalCajas = parseInt(document.getElementById('inputTotalCajas').value);
             if (isNaN(totalCajas) || totalCajas < 1) { alert("⚠️ Número de etiquetas inválido."); return; }
 
-            // ✅ LEER LAS GRs (SI EL PANEL ESTÁ ABIERTO Y TIENE TEXTO)
+            // ✅ LEER LAS GRs PERSONALIZADAS
             const textoGRs = document.getElementById('inputGRsPersonalizadas').value;
             const listaGRs = textoGRs.split(/[\n,]+/).map(g => g.trim()).filter(g => g !== '');
 
