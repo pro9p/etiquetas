@@ -39,22 +39,6 @@
         .btn-buscar { background-color: #007bff; }
         .btn-buscar:hover { background-color: #0056b3; }
         
-        /* ✅ BOTONES DE ACCIÓN */
-        .botones-accion {
-            display: flex; gap: 10px; margin-top: 15px; display: none;
-        }
-        .btn-accion {
-            flex: 1; padding: 12px; font-size: 15px; font-weight: bold;
-            color: white; border: none; border-radius: 5px; cursor: pointer;
-        }
-        .btn-generar { background-color: #ff9800; }
-        .btn-generar:hover { background-color: #e68900; }
-        .btn-imprimir { background-color: #28a745; }
-        .btn-imprimir:hover { background-color: #218838; }
-        .btn-grs { background-color: #6c757d; }
-        .btn-grs:hover { background-color: #5a6268; }
-        .btn-grs.activo { background-color: #007bff; }
-
         .fila-cajas {
             display: flex; gap: 10px; align-items: flex-end; margin-top: 15px; display: none;
         }
@@ -70,25 +54,69 @@
             background-color: #ffc107; color: black; border: none; padding: 8px 20px;
             font-size: 14px; font-weight: bold; border-radius: 4px; cursor: pointer;
         }
-        .btn-ir:hover { background-color: #e0a800; }
 
-        /* ✅ PANEL DE GRs */
-        .panel-grs {
-            display: none; background: #e3f2fd; border: 2px solid #2196f3; 
-            border-radius: 8px; padding: 15px; margin-top: 15px; text-align: left;
+        /* ✅ BOTONES DE ACCIÓN */
+        .contenedor-botones-accion {
+            display: none; justify-content: space-between; gap: 10px; margin-top: 20px;
         }
-        .panel-grs h3 { font-size: 15px; color: #0d47a1; margin-bottom: 10px; }
-        .panel-grs p { font-size: 12px; color: #555; margin-bottom: 10px; }
-        .panel-grs textarea {
-            width: 100%; min-height: 100px; padding: 10px;
-            border: 1px solid #90caf9; border-radius: 4px;
-            font-family: monospace; font-size: 14px; margin-bottom: 10px;
+        .btn-accion {
+            flex: 1; padding: 12px; font-size: 15px; font-weight: bold;
+            color: white; border: none; border-radius: 5px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;
         }
-        .btn-limpiar-grs {
-            background: #dc3545; color: white; border: none; padding: 8px 15px;
-            border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold;
+        .btn-generar { background-color: #ff9800; }
+        .btn-generar:hover { background-color: #e68900; }
+        .btn-grs { background-color: #6c757d; }
+        .btn-grs:hover { background-color: #5a6268; }
+        .btn-imprimir { background-color: #28a745; display: none; }
+        .btn-imprimir:hover { background-color: #218838; }
+
+        /* ✅ VENTANA MODAL (FLOTANTE) PARA LAS GRs */
+        .modal-fondo {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center;
         }
-        .btn-limpiar-grs:hover { background: #c82333; }
+        .modal-caja {
+            background: white; width: 90%; max-width: 600px; border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+        .modal-header {
+            background: #007bff; color: white; padding: 15px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-header h3 { margin: 0; font-size: 18px; }
+        .btn-cerrar-modal {
+            background: none; border: none; color: white; font-size: 24px;
+            cursor: pointer; font-weight: bold;
+        }
+        .modal-body {
+            padding: 20px; max-height: 60vh; overflow-y: auto;
+        }
+        .tabla-grs { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        .tabla-grs th, .tabla-grs td { padding: 8px; border-bottom: 1px solid #ddd; font-size: 14px; text-align: left; }
+        .tabla-grs th { color: #555; }
+        .tabla-grs input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        
+        .btn-agregar-gr {
+            background: #e3f2fd; color: #0d47a1; border: 1px solid #90caf9; padding: 8px 15px;
+            font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 13px;
+            margin-bottom: 15px;
+        }
+        .btn-agregar-gr:hover { background: #bbdefb; }
+        .btn-eliminar-gr {
+            background: #dc3545; color: white; border: none; padding: 6px 10px;
+            border-radius: 3px; cursor: pointer; font-size: 12px;
+        }
+        .total-etiquetas { font-weight: bold; font-size: 15px; color: #333; text-align: right; margin-top: 10px; }
+        
+        .modal-footer {
+            padding: 15px 20px; background: #f8f9fa; border-top: 1px solid #ddd;
+            display: flex; justify-content: flex-end; gap: 10px;
+        }
+        .btn-modal { padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; border: none; font-size: 14px;}
+        .btn-cancelar { background: #6c757d; color: white; }
+        .btn-aplicar { background: #28a745; color: white; }
 
         /* PANEL DE AJUSTES */
         .panel-ajustes {
@@ -97,19 +125,16 @@
         }
         .tabs-ajustes { display: flex; gap: 3px; border-bottom: 2px solid #007bff; margin-bottom: 10px; flex-wrap: wrap; }
         .tab-btn { background: #e9ecef; border: none; padding: 6px 12px; font-size: 12px; font-weight: bold; color: #555; cursor: pointer; border-radius: 4px 4px 0 0; transition: all 0.2s; }
-        .tab-btn:hover { background: #dee2e6; }
         .tab-btn.active { background: #007bff; color: white; }
         .tab-content { display: none; padding: 8px 0; }
         .tab-content.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 8px 15px; }
         .ajuste-compacto { display: flex; align-items: center; gap: 8px; font-size: 12px; min-width: 0; }
-        .ajuste-compacto label { flex: 0 0 110px; font-size: 12px; font-weight: bold; color: #555; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ajuste-compacto label { flex: 0 0 110px; font-size: 12px; font-weight: bold; color: #555; text-align: right; white-space: nowrap; }
         .ajuste-compacto input[type="range"] { flex: 1; cursor: pointer; height: 4px; min-width: 0; }
-        .ajuste-compacto select, .ajuste-compacto input[type="number"], .ajuste-compacto input[type="text"] { flex: 1; padding: 3px 5px; font-size: 12px; border: 1px solid #ccc; border-radius: 3px; cursor: pointer; min-width: 0; }
-        .ajuste-compacto input[type="color"] { flex: 1; height: 24px; padding: 1px; border: 1px solid #ccc; border-radius: 3px; cursor: pointer; min-width: 0; }
+        .ajuste-compacto select, .ajuste-compacto input[type="number"], .ajuste-compacto input[type="text"] { flex: 1; padding: 3px 5px; font-size: 12px; border: 1px solid #ccc; border-radius: 3px; }
+        .ajuste-compacto input[type="color"] { flex: 1; height: 24px; padding: 1px; border: 1px solid #ccc; border-radius: 3px; }
         .ajuste-compacto .valor { flex: 0 0 45px; text-align: right; font-size: 11px; font-weight: bold; color: #007bff; }
-        .ajuste-compacto input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
         .btn-reset-ajustes { background-color: #6c757d; color: white; border: none; padding: 5px 12px; font-size: 11px; border-radius: 3px; cursor: pointer; margin-top: 8px; width: 100%; }
-        .btn-reset-ajustes:hover { background-color: #5a6268; }
 
         .indicador-etiqueta {
             position: fixed; bottom: 30px; left: 30px; background-color: #333; color: white;
@@ -121,8 +146,7 @@
         .hoja {
             width: 210mm; height: 297mm; background: white; margin: 5mm auto;
             display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-            padding-top: 15mm; padding-bottom: 0; page-break-after: always;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding-top: 15mm; padding-bottom: 0; page-break-after: always; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .hoja:last-child { page-break-after: auto; }
         .etiqueta {
@@ -133,20 +157,14 @@
         .texto-etiqueta {
             flex: 1; font-size: 18px; font-weight: bold; color: black; font-family: Arial, sans-serif;
             white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;
-            line-height: 1.4; padding-right: 10px; outline: none; border: 1px dashed #ccc;
-            padding: 5px; min-height: 50px;
+            line-height: 1.4; padding-right: 10px; outline: none; border: 1px dashed #ccc; padding: 5px; min-height: 50px;
         }
         .texto-etiqueta:focus { border-color: #007bff; background-color: #f0f8ff; }
         .texto-etiqueta span { text-decoration: underline; }
-        .logo-dimexa {
-            position: absolute; bottom: 0.25cm; right: 0.25cm; width: 5.32cm; height: 2.14cm; object-fit: contain; pointer-events: none;
-        }
+        .logo-dimexa { position: absolute; bottom: 0.25cm; right: 0.25cm; width: 5.32cm; height: 2.14cm; object-fit: contain; pointer-events: none; }
         .etiqueta-resaltada { animation: parpadeo 1s ease-in-out 3; box-shadow: 0 0 0 5px #ffc107; }
-        @keyframes parpadeo {
-            0% { box-shadow: 0 0 0 5px #ffc107; }
-            50% { box-shadow: 0 0 0 5px #ff5722; }
-            100% { box-shadow: 0 0 0 5px #ffc107; }
-        }
+        @keyframes parpadeo { 0% { box-shadow: 0 0 0 5px #ffc107; } 50% { box-shadow: 0 0 0 5px #ff5722; } 100% { box-shadow: 0 0 0 5px #ffc107; } }
+
         @media print {
             body { background-color: white; }
             .hoja { margin: 0; padding-top: 15mm; padding-bottom: 0; box-shadow: none; }
@@ -194,18 +212,10 @@
         </div>
 
         <!-- ✅ BOTONES DE ACCIÓN -->
-        <div class="botones-accion" id="filaBotonesAccion">
+        <div class="contenedor-botones-accion" id="filaBotonesAccion">
             <button class="btn-accion btn-generar" id="btnGenerar" onclick="generarEtiquetas()">🔄 Generar</button>
-            <button class="btn-accion btn-grs" id="btnToggleGRs" onclick="togglePanelGRs()">🛠️ Personalizar GRs</button>
+            <button class="btn-accion btn-grs" id="btnToggleGRs" onclick="abrirModalGRs()">🛠️ Personalizar GRs</button>
             <button class="btn-accion btn-imprimir" id="btnImprimir" onclick="window.print()">🖨️ Imprimir</button>
-        </div>
-
-        <!-- ✅ PANEL OCULTO DE GRs -->
-        <div class="panel-grs" id="panelGRs">
-            <h3>Personalizar Guías (GRs)</h3>
-            <p>Pega tus GRs (una por línea o separadas por comas). Si pones menos de las que necesitas, se repetirá la última.</p>
-            <textarea id="inputGRsPersonalizadas" placeholder="Ejemplo:&#10;GR:T711-510&#10;GR:T711-511&#10;GR:T711-512"></textarea>
-            <button class="btn-limpiar-grs" onclick="limpiarGRs()">🗑️ Limpiar GRs</button>
         </div>
 
         <!-- PANEL DE AJUSTES -->
@@ -283,6 +293,37 @@
         </div>
     </div>
 
+    <!-- ✅ VENTANA MODAL (FLOTANTE) PARA GRs -->
+    <div class="modal-fondo" id="modalGRs">
+        <div class="modal-caja">
+            <div class="modal-header">
+                <h3>Personalizar Guías (GRs)</h3>
+                <button class="btn-cerrar-modal" onclick="cerrarModalGRs()">×</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 13px; color: #555; margin-bottom: 15px;">
+                    Agrega las GRs y la cantidad de etiquetas para cada una. El sistema calculará el total.
+                </p>
+                <table class="tabla-grs">
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">N° de GR</th>
+                            <th style="width: 25%;">Cant. Etiquetas</th>
+                            <th style="width: 15%;">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaGRs"></tbody>
+                </table>
+                <button class="btn-agregar-gr" onclick="agregarFilaGR()">➕ Agregar otra GR</button>
+                <div class="total-etiquetas" id="totalEtiquetasTexto">Total: 0 etiquetas</div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal btn-cancelar" onclick="cerrarModalGRs()">Cancelar</button>
+                <button class="btn-modal btn-aplicar" onclick="aplicarGRs()">Aplicar y Cerrar</button>
+            </div>
+        </div>
+    </div>
+
     <div id="contenedor-etiquetas"></div>
     <div class="indicador-etiqueta" id="indicadorEtiqueta">Etiqueta 1 / 1</div>
 
@@ -290,6 +331,9 @@
         let etiquetasWord = [];
         let totalEtiquetasActuales = 0;
         let etiquetaActual = 1;
+        
+        // ✅ VARIABLE PARA GUARDAR LA LISTA DE GRs APLICADA
+        let listaGRsAplicada = []; 
 
         function cambiarTab(event, tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -298,23 +342,69 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // ✅ MOSTRAR/OCULTAR EL PANEL DE GRs
-        function togglePanelGRs() {
-            const panel = document.getElementById('panelGRs');
-            const btn = document.getElementById('btnToggleGRs');
-            if (panel.style.display === 'none' || panel.style.display === '') {
-                panel.style.display = 'block';
-                btn.classList.add('activo');
-            } else {
-                panel.style.display = 'none';
-                btn.classList.remove('activo');
-            }
+        // ✅ LÓGICA DE LA VENTANA MODAL
+        function abrirModalGRs() {
+            document.getElementById('modalGRs').style.display = 'flex';
         }
 
-        // ✅ LIMPIAR EL CUADRO DE GRs
-        function limpiarGRs() {
-            document.getElementById('inputGRsPersonalizadas').value = '';
-            document.getElementById('inputGRsPersonalizadas').focus();
+        function cerrarModalGRs() {
+            document.getElementById('modalGRs').style.display = 'none';
+        }
+
+        function agregarFilaGR() {
+            const tbody = document.getElementById('cuerpoTablaGRs');
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td><input type="text" class="input-gr" placeholder="Ej: GR:T711-510" oninput="actualizarTotalModal()"></td>
+                <td><input type="number" class="input-cantidad" value="1" min="1" oninput="actualizarTotalModal()"></td>
+                <td style="text-align: center;"><button class="btn-eliminar-gr" onclick="this.closest('tr').remove(); actualizarTotalModal();">🗑️</button></td>
+            `;
+            tbody.appendChild(fila);
+            fila.querySelector('.input-gr').focus();
+            actualizarTotalModal();
+        }
+
+        function actualizarTotalModal() {
+            let total = 0;
+            document.querySelectorAll('.input-cantidad').forEach(input => {
+                total += parseInt(input.value) || 0;
+            });
+            document.getElementById('totalEtiquetasTexto').textContent = 'Total: ' + total + ' etiquetas';
+        }
+
+        // ✅ APLICAR LAS GRs Y GUARDARLAS EN MEMORIA
+        function aplicarGRs() {
+            const filas = document.querySelectorAll('#cuerpoTablaGRs tr');
+            const nuevaLista = [];
+            
+            filas.forEach(fila => {
+                const gr = fila.querySelector('.input-gr').value.trim();
+                const cantidad = parseInt(fila.querySelector('.input-cantidad').value) || 0;
+                
+                if (gr !== '' && cantidad > 0) {
+                    for (let c = 0; c < cantidad; c++) {
+                        nuevaLista.push(gr);
+                    }
+                }
+            });
+
+            listaGRsAplicada = nuevaLista;
+            
+            // Cambiar el color del botón para indicar que hay GRs aplicadas
+            const btn = document.getElementById('btnToggleGRs');
+            if (listaGRsAplicada.length > 0) {
+                btn.innerHTML = '✅ GRs Personalizadas (' + listaGRsAplicada.length + ')';
+                btn.style.background = '#007bff';
+            } else {
+                btn.innerHTML = '🛠️ Personalizar GRs';
+                btn.style.background = '#6c757d';
+            }
+
+            cerrarModalGRs();
+            
+            if (listaGRsAplicada.length > 0) {
+                alert("✅ Se han cargado " + listaGRsAplicada.length + " GRs personalizadas. Ahora dale a 'Generar'.");
+            }
         }
 
         function aplicarAjustes() {
@@ -393,14 +483,17 @@
             document.getElementById('grupoEditor').style.display = 'block';
             document.getElementById('filaCajas').style.display = 'flex';
             document.getElementById('filaBotonesAccion').style.display = 'flex';
-            document.getElementById('btnGenerar').style.display = 'block';
+            document.getElementById('btnGenerar').style.display = 'flex';
             document.getElementById('panelAjustes').style.display = 'block';
             document.getElementById('btnImprimir').style.display = 'none';
             
-            // Al buscar, ocultamos el panel de GRs y lo limpiamos (opcional, pero recomendado)
-            document.getElementById('panelGRs').style.display = 'none';
-            document.getElementById('btnToggleGRs').classList.remove('activo');
-            document.getElementById('inputGRsPersonalizadas').value = ''; 
+            // Limpiar GRs y reiniciar el botón
+            listaGRsAplicada = [];
+            document.getElementById('cuerpoTablaGRs').innerHTML = '';
+            document.getElementById('totalEtiquetasTexto').textContent = 'Total: 0 etiquetas';
+            const btnGR = document.getElementById('btnToggleGRs');
+            btnGR.innerHTML = '🛠️ Personalizar GRs';
+            btnGR.style.background = '#6c757d';
 
             document.getElementById('contenedor-etiquetas').innerHTML = '';
         }
@@ -410,12 +503,15 @@
             let textoHTML = editor.innerHTML;
             if (textoHTML.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, '').trim() === "") { alert("⚠️ Texto vacío."); return; }
 
-            const totalCajas = parseInt(document.getElementById('inputTotalCajas').value);
-            if (isNaN(totalCajas) || totalCajas < 1) { alert("⚠️ Número de etiquetas inválido."); return; }
-
-            // ✅ LEER LAS GRs PERSONALIZADAS
-            const textoGRs = document.getElementById('inputGRsPersonalizadas').value;
-            const listaGRs = textoGRs.split(/[\n,]+/).map(g => g.trim()).filter(g => g !== '');
+            // ✅ SI HAY GRs EN EL MODAL, EL TOTAL DE ETIQUETAS SE BASA EN ELLAS. SI NO, EN EL INPUT.
+            let totalCajas;
+            if (listaGRsAplicada.length > 0) {
+                totalCajas = listaGRsAplicada.length;
+                document.getElementById('inputTotalCajas').value = totalCajas; // Sincronizar el input
+            } else {
+                totalCajas = parseInt(document.getElementById('inputTotalCajas').value);
+                if (isNaN(totalCajas) || totalCajas < 1) { alert("⚠️ Número de etiquetas inválido."); return; }
+            }
 
             totalEtiquetasActuales = totalCajas;
             etiquetaActual = 1;
@@ -439,14 +535,9 @@
                     const numeroFormateado = String(numeroCajaActual).padStart(2, '0');
                     const totalFormateado = String(totalCajas).padStart(2, '0');
 
-                    // ✅ LÓGICA DE ASIGNACIÓN DE GR
                     let grDeEstaEtiqueta = null;
-                    if (listaGRs.length > 0) {
-                        if (numeroCajaActual <= listaGRs.length) {
-                            grDeEstaEtiqueta = listaGRs[numeroCajaActual - 1];
-                        } else {
-                            grDeEstaEtiqueta = listaGRs[listaGRs.length - 1]; // Repetir la última si faltan
-                        }
+                    if (listaGRsAplicada.length > 0 && numeroCajaActual <= listaGRsAplicada.length) {
+                        grDeEstaEtiqueta = listaGRsAplicada[numeroCajaActual - 1];
                     }
 
                     let lineasFinales = lineasOriginales.map(linea => {
@@ -479,7 +570,7 @@
                 contenedor.appendChild(hoja);
             }
 
-            document.getElementById('btnImprimir').style.display = 'block';
+            document.getElementById('btnImprimir').style.display = 'flex';
             document.getElementById('inputIrEtiqueta').max = totalCajas;
             aplicarAjustes();
             actualizarIndicador();
